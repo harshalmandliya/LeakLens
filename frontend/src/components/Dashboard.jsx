@@ -1,14 +1,14 @@
 import { ShieldAlert, ShieldCheck, FileText, Bot, AlertTriangle, Fingerprint } from 'lucide-react';
-import { cn } from '../lib/utils';
+import { cn } from '../lib/utils.js';
 import { useState } from 'react';
 
 export function Dashboard({ result, onReset }) {
   const [maskData, setMaskData] = useState(true);
-  
+
   const { summary, findings, risk_score, risk_level, insights } = result;
 
   const getRiskColors = (level) => {
-    switch(level) {
+    switch (level) {
       case 'critical': return 'bg-red-100 text-red-800 border-red-200';
       case 'high': return 'bg-orange-100 text-orange-800 border-orange-200';
       case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
@@ -26,7 +26,7 @@ export function Dashboard({ result, onReset }) {
     <div className="w-full max-w-5xl mx-auto mt-8 space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
         <h2 className="text-2xl font-bold tracking-tight text-slate-800 px-2 lg:px-4">Analysis Results</h2>
-        <button 
+        <button
           onClick={onReset}
           className="text-sm font-medium text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-xl transition-colors"
         >
@@ -55,14 +55,14 @@ export function Dashboard({ result, onReset }) {
         {/* AI Insights Card */}
         <div className="col-span-1 md:col-span-2 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-8 rounded-2xl shadow-lg border border-indigo-900/50 text-white flex flex-col relative overflow-hidden group">
           <div className="absolute top-0 right-0 -mt-10 -mr-10 w-48 h-48 bg-indigo-500 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-700"></div>
-          
+
           <div className="flex items-center space-x-3 mb-6 relative z-10">
             <div className="p-2.5 bg-white/10 rounded-xl backdrop-blur-md border border-white/5">
               <Bot className="w-6 h-6 text-indigo-300" />
             </div>
             <h3 className="text-xl font-bold tracking-tight text-indigo-50">AI Security Insights</h3>
           </div>
-          
+
           <div className="space-y-6 relative z-10 flex-1">
             <div className="p-4 bg-white/5 rounded-xl border border-white/10 backdrop-blur-sm">
               <p className="text-indigo-100/90 text-[15px] leading-relaxed font-medium">
@@ -99,16 +99,16 @@ export function Dashboard({ result, onReset }) {
             </div>
           </div>
           <div className="flex items-center space-x-3 bg-white px-4 py-2 rounded-xl shadow-sm border border-slate-100">
-             <span className="text-sm font-bold text-slate-600">Mask Values</span>
-             <button 
-               onClick={() => setMaskData(!maskData)}
-               className={cn("w-12 h-6 rounded-full relative transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-1", maskData ? "bg-indigo-600" : "bg-slate-200")}
-             >
-               <span className={cn("absolute top-1 left-1 bg-white w-4 h-4 rounded-full transition-transform duration-300 shadow-sm", maskData ? "translate-x-6" : "translate-x-0" )}></span>
-             </button>
+            <span className="text-sm font-bold text-slate-600">Mask Values</span>
+            <button
+              onClick={() => setMaskData(!maskData)}
+              className={cn("w-12 h-6 rounded-full relative transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-1", maskData ? "bg-indigo-600" : "bg-slate-200")}
+            >
+              <span className={cn("absolute top-1 left-1 bg-white w-4 h-4 rounded-full transition-transform duration-300 shadow-sm", maskData ? "translate-x-6" : "translate-x-0")}></span>
+            </button>
           </div>
         </div>
-        
+
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm whitespace-nowrap">
             <thead className="bg-white text-slate-400 border-b border-slate-100">

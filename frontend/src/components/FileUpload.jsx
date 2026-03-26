@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { UploadCloud, File, AlertCircle } from 'lucide-react';
-import { cn } from '../lib/utils';
+import { cn } from '../lib/utils.js';
 
 export function FileUpload({ onAnalysisComplete, isLoading, setIsLoading }) {
   const [dragActive, setDragActive] = useState(false);
@@ -39,23 +39,23 @@ export function FileUpload({ onAnalysisComplete, isLoading, setIsLoading }) {
       setError("Please upload a valid .log or .txt file.");
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     const formData = new FormData();
     formData.append('file', file);
-    
+
     try {
       const response = await fetch('http://localhost:8000/analyze', {
         method: 'POST',
         body: formData,
       });
-      
+
       if (!response.ok) {
         const errData = await response.json();
         throw new Error(errData.detail || "Upload failed.");
       }
-      
+
       const data = await response.json();
       onAnalysisComplete(data);
     } catch (err) {
@@ -67,7 +67,7 @@ export function FileUpload({ onAnalysisComplete, isLoading, setIsLoading }) {
 
   return (
     <div className="w-full max-w-2xl mx-auto mt-8">
-      <div 
+      <div
         className={cn(
           "relative flex flex-col items-center justify-center w-full min-h-[300px] border-2 border-dashed rounded-2xl transition-all duration-200 ease-in-out bg-white p-8 overflow-hidden group",
           dragActive ? "border-indigo-500 bg-indigo-50 scale-105" : "border-slate-300 hover:border-indigo-400 hover:bg-slate-50"
@@ -77,14 +77,14 @@ export function FileUpload({ onAnalysisComplete, isLoading, setIsLoading }) {
         onDragOver={handleDrag}
         onDrop={handleDrop}
       >
-        <input 
+        <input
           ref={inputRef}
-          type="file" 
-          className="hidden" 
-          accept=".log,.txt" 
+          type="file"
+          className="hidden"
+          accept=".log,.txt"
           onChange={handleChange}
         />
-        
+
         {isLoading ? (
           <div className="flex flex-col items-center space-y-4">
             <div className="w-16 h-16 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
@@ -99,7 +99,7 @@ export function FileUpload({ onAnalysisComplete, isLoading, setIsLoading }) {
               <p className="text-xl font-semibold text-slate-800">Upload Log File for Analysis</p>
               <p className="text-sm text-slate-500 mt-2 max-w-sm">Drag and drop your .log or .txt file here, or click to browse. We will securely scan for exposed secrets and PII.</p>
             </div>
-            <button 
+            <button
               onClick={() => inputRef.current?.click()}
               className="px-6 py-2.5 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition-colors shadow-sm focus:ring-4 focus:ring-indigo-100"
             >
@@ -108,7 +108,7 @@ export function FileUpload({ onAnalysisComplete, isLoading, setIsLoading }) {
           </div>
         )}
       </div>
-      
+
       {error && (
         <div className="mt-4 p-4 rounded-xl bg-red-50 flex items-start space-x-3 text-red-800 border border-red-100 shadow-sm animate-in slide-in-from-top-2">
           <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
